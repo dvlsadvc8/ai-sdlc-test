@@ -1,0 +1,12 @@
+{
+  "schema_version": "1",
+  "phase": "requirements-approved",
+  "created_at": "2026-10-14T05:48:04Z",
+  "updated_at": "2026-10-14T06:03:48Z",
+  "requirements.source": "docs/requirements.md",
+  "requirements.source_hash": "9f13fb6b9b7dea7a4e6b60941fa99c68d376195e",
+  "requirements.doc": "docs/requirements.md",
+  "backlog.doc": "docs/backlog.md",
+  "approval.requirements.hash": "0f58dc6066628de291e35d887e8eb37283a29cd6",
+  "approval.requirements.at": "2026-10-14T06:03:47Z"
+}

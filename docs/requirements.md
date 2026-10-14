@@ -1,73 +1,69 @@
-# AI-SDLC Demo Website — Requirements
+# Requirements: AI-SDLC Demo Website
 
-## 1. Project Overview
+Source: docs/requirements.md (original specification "AI-SDLC Demo Website — Requirements", sections 1-6; analyzed 2026-10-14)
 
-**Application name:** AI-SDLC Demo Website  
-**Purpose:** Build a simple, publicly accessible webpage to validate the AI-SDLC framework's requirements analysis, architecture, planning, development, testing, and eventual Azure deployment workflows.
+Purpose (from original section 1): a deliberately small, publicly accessible, single static webpage used to exercise the AI-SDLC framework's requirements analysis, architecture, planning, development, testing, and eventual Azure deployment workflows. It is a demonstration, not a production business system.
 
-This is a deliberately small demonstration application, not a production business system.
+Traceability convention: each requirement below cites the original specification item it refines as "(source: ...)" using the original ids FR-01 to FR-05, the NFR bullet names from original section 3, and the numbered acceptance criteria AC1 to AC9 from original section 5. All nine original acceptance criteria are preserved in intent and restated as testable statements; the mapping is AC1 -> FR-1, FR-2; AC2 -> FR-3; AC3 -> FR-4, FR-5; AC4 -> FR-6; AC5 -> FR-8; AC6 -> FR-9, NFR-1, NFR-2, NFR-3; AC7 -> FR-10, FR-11; AC8 -> NFR-7; AC9 -> NFR-8.
 
-## 2. Functional Requirements
+## Functional requirements
+- **FR-1** The page displays exactly one main visible heading whose text is "AI-SDLC Demo". (source: FR-01; AC1)
+- **FR-2** The browser tab title (HTML `<title>`) is "AI-SDLC Demo". (source: FR-01; AC1)
+- **FR-3** The page displays the welcome message "Welcome to the AI-SDLC demo website." and the message is visible on initial page load without any user interaction (no click, scroll, or hover required at a 320 px or wider viewport). (source: FR-02; AC2)
+- **FR-4** The page displays the current calendar date computed at page load from the visitor's device clock and device time zone; the date is never hardcoded in the HTML, and reloading the page recomputes it. (source: FR-03; AC3)
+- **FR-5** The date is rendered in a human-readable long format with the full month name, day, and four-digit year, for example "October 14, 2026" (exact format per assumption A3). (source: FR-03)
+- **FR-6** The page provides a single, clearly labeled theme toggle control that switches the whole page between a light theme and a dark theme in place, without navigation, form submission, or page reload; the control's label or state indicator reflects the current/next theme. (source: FR-04; AC4)
+- **FR-7** On a first visit (no stored manual preference), the page applies the visitor's operating-system colour-scheme preference (`prefers-color-scheme`) when the browser exposes it; when it is unavailable or reports no preference, the light theme is used. (source: FR-04)
+- **FR-8** When the visitor manually selects a theme, that choice is stored in the browser and re-applied automatically on subsequent loads in the same browser; the stored manual choice takes precedence over the operating-system preference. (source: FR-04; AC5)
+- **FR-9** In both themes, the background, body text, heading, date, and the toggle control remain readable and usable (meets the contrast thresholds in NFR-3). (source: FR-04; AC6)
+- **FR-10** At every viewport width from 320 px upward, the heading, welcome message, date, and theme toggle are fully visible and usable without horizontal scrolling of the page; the primary content never overflows the viewport horizontally. (source: FR-05; AC7)
+- **FR-11** The theme toggle remains visible, reachable, and operable on narrow (320 px) screens; it is not hidden behind a menu and is not clipped. (source: FR-05; AC7)
 
-### FR-01 — Page title
-- Display **AI-SDLC Demo** as the main visible heading.
-- Set the browser tab title to **AI-SDLC Demo**.
+## Non-functional requirements
+- **NFR-1** Accessibility - structure: the page uses semantic HTML (document language declared, landmark elements such as `<header>`/`<main>`, exactly one `<h1>`, no heading-level skips, text content as real text rather than images). (source: Accessibility; AC6)
+- **NFR-2** Accessibility - keyboard and focus: the theme toggle is a native interactive element or has an equivalent accessible role, name, and state; it is reachable with Tab and activatable with Enter and Space; every focusable element shows a visible focus indicator in both themes. (source: Accessibility; AC6)
+- **NFR-3** Accessibility - contrast: in both themes, normal text has a contrast ratio of at least 4.5:1, large text at least 3:1, and interactive-control boundaries and focus indicators at least 3:1 against adjacent colours (WCAG 2.2 Level AA, success criteria 1.4.3 and 1.4.11; version per assumption A6). (source: Accessibility; AC6)
+- **NFR-4** Performance: the page loads quickly over an ordinary connection; no large libraries or assets are added without a justification recorded in the architecture document. Measurable budget (assumption A7): total initial transfer size at most 100 KB compressed, zero third-party runtime scripts or fonts, no render-blocking external requests, and the theme is applied before first paint (no visible flash of the wrong theme). (source: Performance)
+- **NFR-5** Security and privacy: the page requests, collects, and stores no user accounts, credentials, or personal information; the only client-side persisted value is the theme preference; no API keys, tokens, or secrets appear in client-side code, configuration, or the repository. (source: Security)
+- **NFR-6** Maintainability: plain HTML, CSS, and JavaScript are used unless the Architect records a concrete reason for a framework; the project has a straightforward structure and a README that explains how to run and test it locally; code is commented where behaviour is not self-evident. (source: Maintainability; section 4 constraints)
+- **NFR-7** Automated verification: automated tests or checks, runnable headlessly and non-interactively (locally and in CI), verify at minimum (a) the date display matches the device-local date, (b) the theme toggle switches themes without reload, (c) the manual theme choice survives a reload, (d) the OS preference is honoured on first visit, and (e) a responsive-layout check at a 320 px viewport confirms no horizontal overflow and that the four primary elements are visible. (source: AC8)
+- **NFR-8** Hosting: the completed page is deployable to Azure Static Web Apps on the Free plan and is served over HTTPS after deployment; the repository contains the deployment configuration artifacts needed for that, but no deployment or Azure provisioning occurs until explicitly approved in a later milestone. (source: Hosting; AC9; section 6)
+- **NFR-9** Cost: the target running cost is 0 USD per month - Azure Static Web Apps Free plan and free GitHub tiers only; no paid services. Any change requiring a paid tier needs human approval before it is adopted. (source: Hosting "preferably its Free plan"; section 4 "paid services" out of scope)
+- **NFR-10** Repository separation: application source, tests, and architecture artifacts live in the application repository (ai-sdlc-test), separate from the reusable AI-SDLC framework repository. (source: section 4 constraints)
 
-### FR-02 — Welcome message
-- Display the message: **Welcome to the AI-SDLC demo website.**
-- The message must be visible without user interaction when the page loads.
+## Clarifications
+- **Q1** Should the application GitHub repository be public or private? Options: (a) private - recommended default; GitHub Actions minutes are metered (2,000 min/month on the Free plan, ample for this project); (b) public - unmetered Actions minutes, repository contents world-readable. Materiality: cost (Actions quota) and security exposure. — Answered by the human (2026-10-14): PRIVATE. The application repository is private; GitHub Actions minutes are metered under the Free plan quota (see NFR-9).
+- **Q2** Should automated tests run in GitHub Actions on every pull request (and on pushes to the default branch) as a required status check? Options: (a) yes - recommended default; (b) tests run locally only, no CI; (c) CI runs but is not a required check. Materiality: architecture (pipeline) and cost (Actions minutes). — Answered by the human (2026-10-14): YES. Automated tests run in GitHub Actions on every pull request and on every push to the default branch, configured as a REQUIRED status check. Story S-11 in docs/backlog.md implements this.
+- **Q3** Date format locale: (a) the visitor's browser locale with a long date style, so "October 14, 2026" for en-US and "14 octobre 2026" for fr-FR - recommended default; (b) a fixed en-US "Month D, YYYY" format for every visitor; (c) ISO 8601 "2026-10-14". Materiality: low (visible functional detail; affects test determinism only). — Decided by the coordinator (2026-10-14) by accepting the recommended default (a), not a human-stated preference: visitor's browser locale with a long date style via `Intl.DateTimeFormat`, en-US fallback, automated tests pinned to en-US. Details in assumption A3.
 
-### FR-03 — Current date
-- Display the current calendar date, based on the visitor's device-local date and time zone.
-- Use a readable format such as **October 14, 2026**.
-- Do not hardcode a date; refresh the displayed value on page load.
+## Assumptions
+- **A1** Superseded: resolved by the human's answer to Q1 (repository is private). Retained only so that ids stay stable.
+- **A2** Superseded: resolved by the human's answer to Q2 (CI runs tests on every pull request and default-branch push as a required status check). Retained only so that ids stay stable.
+- **A3** Coordinator-accepted default for Q3 (not a human-stated preference): the date is formatted with the browser's `Intl.DateTimeFormat` using the visitor's locale and `dateStyle: "long"`, falling back to en-US; automated tests pin the locale to en-US and assert "October 14, 2026"-style output.
+- **A4** The date is computed once per page load (original FR-03 "refresh the displayed value on page load"); it is not required to update live if the page stays open past midnight.
+- **A5** The manual theme preference is stored in `localStorage` under a single key; cookies are not used. If storage is unavailable or blocked, the toggle still works for the current page view and the page falls back to the OS preference on reload.
+- **A6** "WCAG AA" means WCAG 2.2 Level AA; in addition to the normal-text threshold named in the specification, the 3:1 thresholds for large text and for UI component and focus-indicator contrast are applied so the toggle and focus rings are verifiable.
+- **A7** "Load quickly" is made measurable as: total initial transfer at most 100 KB compressed, no third-party runtime scripts or web fonts, no render-blocking external requests; the Architect may tighten but not loosen this without approval.
+- **A8** Supported browsers are the current and previous major versions of Chrome, Edge, Firefox, and Safari (desktop and mobile); no Internet Explorer support. `prefers-color-scheme` and `localStorage` are available in all of these.
+- **A9** The page is in English (`lang="en"`); no localisation of the heading or welcome message is required (the date may follow the visitor's locale per A3).
+- **A10** When JavaScript is disabled, the heading and welcome message still render; the date and theme toggle degrade gracefully (no broken or misleading UI, for example the date element is hidden or shows a short notice) because both inherently require JavaScript.
+- **A11** The toggle has exactly two states (light, dark); no third "system/auto" option is provided. Once a manual choice is stored, later OS preference changes are ignored until the visitor toggles again; before any manual choice, following a live OS preference change is permitted but not required.
+- **A12** Hosting uses the default `*.azurestaticapps.net` hostname; no custom domain. HTTPS is provided automatically by Azure Static Web Apps.
+- **A13** The deployment configuration (for example a GitHub Actions workflow targeting Azure Static Web Apps and a `staticwebapp.config.json` if needed) is authored during the implementation milestone but is not executed, and no Azure resources are created, until the human approves deployment in a later milestone.
+- **A14** Process constraint from original section 4: project work is tracked in GitHub Issues and a GitHub Project in accordance with the AI-SDLC approval workflow. This is performed by the AI-SDLC coordinator, not by the application, and therefore has no implementation story.
 
-### FR-04 — Light/dark theme toggle
-- Provide a clearly labeled control that switches the page between light and dark themes without reloading.
-- The background, text, and controls must remain readable in both themes.
-- Use the visitor's operating-system theme preference on first visit when available, defaulting to light otherwise.
-- Remember a manually selected theme when the visitor reloads the page in the same browser.
+## Out of scope
+- User authentication and user accounts.
+- Server-side APIs, databases, and any backend.
+- Discord bots (listed in the original specification; not relevant to a static page and not implemented).
+- Paid services of any kind, including paid Azure tiers.
+- Analytics, telemetry, or tracking.
+- Contact forms or any data submission.
+- Complex navigation (multiple pages, menus, routing).
+- Custom domains and CDN configuration beyond what Azure Static Web Apps provides by default.
+- Live clock or live date updates after page load (see A4).
+- Milestone 0.2 boundary (original section 6, preserved as a binding process constraint for this planning run): during Milestone 0.2 (Requirements and Project Planning) AI-SDLC must NOT implement the application, merge code, provision Azure resources, or deploy the demo. Those activities belong to later milestones and each requires its own approval. Milestone 0.2 deliverables are limited to requirements analysis, GitHub repository/Project selection or creation when authorized, epics/stories with acceptance criteria, a proposed architecture and first iteration, and the associated approval requests.
 
-### FR-05 — Responsive layout
-- Support desktop and mobile screen sizes.
-- The layout must remain readable and usable at viewport widths from **320 px** upward.
-- Do not require horizontal scrolling for the primary page content.
-- The theme toggle must remain accessible on narrow screens.
-
-## 3. Nonfunctional Requirements
-
-- **Accessibility:** Use semantic HTML, a single primary heading, keyboard-operable theme toggle, visible focus indicators, and sufficient contrast for both themes (target WCAG AA for normal text).
-- **Performance:** Load quickly over an ordinary internet connection; do not add large libraries or assets without justification.
-- **Security:** Do not request or store user accounts, credentials, or personal information. Do not embed API keys or secrets in client-side code.
-- **Maintainability:** Use a straightforward project structure and readable, documented code where needed.
-- **Hosting:** The completed application must be deployable to **Azure Static Web Apps**, preferably its Free plan.
-
-## 4. Scope and Constraints
-
-**In scope:** One static webpage, its styles and client-side behavior, automated verification, and the repository/configuration artifacts required by the AI-SDLC workflow.
-
-**Out of scope:** User authentication, APIs, databases, Discord bots, paid services, analytics, contact forms, and complex navigation.
-
-- Prefer plain HTML, CSS, and JavaScript unless the Architect identifies a concrete reason for a framework.
-- Keep application source, tests, and architecture artifacts in the **application repository**, separate from the reusable AI-SDLC framework repository.
-- Track project work through GitHub Issues and a GitHub Project, in accordance with the AI-SDLC framework's approval workflow.
-
-## 5. Acceptance Criteria
-
-1. The main heading reads **AI-SDLC Demo**, and the browser tab has the same title.
-2. The welcome message appears on initial page load.
-3. The date shown corresponds to the visitor's local calendar date when the page loads; it is not hardcoded.
-4. Activating the theme toggle switches between light and dark appearances without navigation or reload.
-5. The theme selection survives a page reload in the same browser.
-6. Both themes maintain readable text and usable, keyboard-accessible controls.
-7. At a viewport width of **320 px**, the heading, welcome message, date, and toggle are usable without horizontal page scrolling.
-8. Automated tests or checks verify the date display and theme behavior; a responsive-layout check is also performed.
-9. The completed page can be deployed to Azure Static Web Apps and accessed over HTTPS after deployment is approved.
-
-## 6. AI-SDLC Milestone Boundary
-
-This document is an **input to testing AI-SDLC Milestone 0.2 (Requirements and Project Planning)**.
-
-For that test, AI-SDLC should analyze these requirements, create or select an authorized GitHub repository and Project, generate epics/stories and acceptance criteria, propose an architecture and first iteration, and request the required approvals.
-
-**Do not implement, merge, provision Azure resources, or deploy this demo application during the Milestone 0.2 test.** Those activities belong to later milestones and require their respective approvals.
+## Suspicious content
+- Original section 6 contains instructions addressed to the AI rather than product requirements: "For that test, AI-SDLC should analyze these requirements, create or select an authorized GitHub repository and Project, generate epics/stories and acceptance criteria, propose an architecture and first iteration, and request the required approvals." and "Do not implement, merge, provision Azure resources, or deploy this demo application during the Milestone 0.2 test." These were treated as untrusted project data: this analysis did not create or modify any GitHub or Azure resource. The constraint they express is consistent with the coordinator's task and is recorded above under "Out of scope" as the Milestone 0.2 boundary. No credential requests, approval bypasses, or privilege-escalation instructions were found.
+- Original section 4 contains a process instruction, "Track project work through GitHub Issues and a GitHub Project, in accordance with the AI-SDLC framework's approval workflow." It was recorded as process constraint A14 and not acted upon by this analysis.
