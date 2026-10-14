@@ -15,7 +15,7 @@ As a developer, I want a straightforward, documented project structure in the ap
 Acceptance criteria:
 - Given the application repository, when it is inspected, then it contains a `README.md` that states the project purpose and gives the commands to serve the page locally and to run the automated tests.
 - Given the repository layout, when the Architect's structure is compared to it, then source, styles, scripts, tests, and `docs/` architecture artifacts each have a dedicated location and no framework (library) dependency is present unless `docs/` records a justification.
-- Given the repository, when it is scanned, then it contains no files belonging to the AI-SDLC framework repository (C:/repos/ai-sdlc) and no secrets, tokens, or credentials.
+- Given the repository is public (clarification Q1, revised), when it and its full commit history are scanned, then it contains no files belonging to the AI-SDLC framework repository (C:/repos/ai-sdlc) and no secrets, tokens, or credentials.
 
 ### S-2: Heading, tab title, and welcome message
 Priority: 1
@@ -152,7 +152,7 @@ As a maintainer, I want the automated tests to run in GitHub Actions on every pu
 Acceptance criteria:
 - Given a pull request to the default branch, when it is opened or updated, then a GitHub Actions workflow runs the test suite headlessly and reports a status check.
 - Given a failing test, when the workflow runs, then the status check fails and, because the check is configured as required, the pull request cannot be merged.
-- Given the workflow, when its monthly usage is estimated, then it stays within the free GitHub Actions quota at zero cost.
+- Given the repository is public on the GitHub Free plan, when the workflow runs on standard GitHub-hosted runners, then it incurs zero cost (Actions minutes are unmetered for public repositories) and the required status check is enforceable through branch protection.
 
 ## E-6: Azure Static Web Apps deployment readiness
 Requirements: NFR-8, NFR-9, NFR-10
@@ -166,6 +166,6 @@ As a maintainer, I want the repository to contain the Azure Static Web Apps depl
 
 Acceptance criteria:
 - Given the repository, when it is inspected, then it contains a deployment workflow or configuration targeting Azure Static Web Apps with the Free plan (SKU Free) and the static app root pointing at the page's output directory.
-- Given the deployment configuration, when it is reviewed, then it contains no secrets or tokens in plain text and references only GitHub secrets or OIDC to be supplied at deployment approval time.
+- Given the deployment configuration, when it is reviewed, then it contains no secrets or tokens in plain text (the repository is public and world-readable) and references only GitHub encrypted secrets or OIDC to be supplied at deployment approval time.
 - Given Milestone 0.2 and the implementation milestone, when the configuration is merged, then no Azure resource has been created and no deployment has run; the workflow is gated on explicit human approval (for example manual trigger or a protected environment).
 - Given an approved deployment in a later milestone, when the page is deployed, then it is reachable over HTTPS on the default azurestaticapps.net hostname and serves the heading, welcome message, date, and working toggle.

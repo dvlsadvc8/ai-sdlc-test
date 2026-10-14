@@ -2,11 +2,11 @@
   "schema_version": "1",
   "phase": "requirements-approved",
   "created_at": "2026-10-14T05:48:04Z",
-  "updated_at": "2026-10-14T06:03:48Z",
+  "updated_at": "2026-10-14T06:15:45Z",
   "requirements.source": "docs/requirements.md",
-  "requirements.source_hash": "9f13fb6b9b7dea7a4e6b60941fa99c68d376195e",
+  "requirements.source_hash": "b8a9e09c1780a4b940d41ff48ae253b39f4f9e11",
   "requirements.doc": "docs/requirements.md",
   "backlog.doc": "docs/backlog.md",
-  "approval.requirements.hash": "0f58dc6066628de291e35d887e8eb37283a29cd6",
-  "approval.requirements.at": "2026-10-14T06:03:47Z"
+  "approval.requirements.hash": "61afd0a7be55b3dadca56183fc3a2be641794b5b",
+  "approval.requirements.at": "2026-10-14T06:15:44Z"
 }
