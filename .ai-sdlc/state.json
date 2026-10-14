@@ -1,12 +1,15 @@
 {
   "schema_version": "1",
-  "phase": "requirements-approved",
+  "phase": "architecture-approved",
   "created_at": "2026-10-14T05:48:04Z",
-  "updated_at": "2026-10-14T06:15:45Z",
+  "updated_at": "2026-10-14T06:49:18Z",
   "requirements.source": "docs/requirements.md",
   "requirements.source_hash": "b8a9e09c1780a4b940d41ff48ae253b39f4f9e11",
   "requirements.doc": "docs/requirements.md",
   "backlog.doc": "docs/backlog.md",
   "approval.requirements.hash": "61afd0a7be55b3dadca56183fc3a2be641794b5b",
-  "approval.requirements.at": "2026-10-14T06:15:44Z"
+  "approval.requirements.at": "2026-10-14T06:15:44Z",
+  "architecture.doc": "docs/architecture.md",
+  "approval.architecture.hash": "54b6dbfc4f5306cb07382cf9ea5b0f7f2e593357",
+  "approval.architecture.at": "2026-10-14T06:49:18Z"
 }
